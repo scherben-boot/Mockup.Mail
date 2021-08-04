@@ -57,72 +57,70 @@ class _ReportingPageState extends State<ReportingPage> {
           ),
         ),
         child: SafeArea(
-          child: Center(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                CupertinoFormSection(
-                  header: Text("Meta-Informationen"),
-                  children: [
-                    CupertinoFormRow(
-                      child: CupertinoSwitch(
-                        value: _includeLocation,
-                        onChanged: (includeLocation) =>
-                            setState(() => _includeLocation = includeLocation),
-                      ),
-                      prefix: Text("Position einfügen"),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              CupertinoFormSection(
+                header: Text("Meta-Informationen"),
+                children: [
+                  CupertinoFormRow(
+                    child: CupertinoSwitch(
+                      value: _includeLocation,
+                      onChanged: (includeLocation) =>
+                          setState(() => _includeLocation = includeLocation),
                     ),
-                    CupertinoFormRow(
-                      child: CupertinoSwitch(
-                        value: _imagePath != null,
-                        onChanged: (includeImage) =>
-                            _updateImagePath(includeImage),
-                      ),
-                      prefix: Text("Bild einfügen"),
+                    prefix: Text("Position einfügen"),
+                  ),
+                  CupertinoFormRow(
+                    child: CupertinoSwitch(
+                      value: _imagePath != null,
+                      onChanged: (includeImage) =>
+                          _updateImagePath(includeImage),
                     ),
-                  ],
-                ),
-                CupertinoFormSection(
-                  header: Text("Nachricht"),
-                  children: [
-                    CupertinoTextField(
-                      padding: EdgeInsets.all(16.0),
-                      placeholder: "Titel",
-                      controller: _titleController,
-                    ),
-                    CupertinoTextField(
-                      padding: EdgeInsets.all(16.0),
-                      minLines: 5,
-                      maxLines: null,
-                      placeholder: "Beschreibung",
-                      controller: _descriptionController,
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CupertinoButton(
-                          child: Text("Vorschlag senden"),
-                          onPressed: () => _sendReport(ReportType.Proposal),
-                        ),
+                    prefix: Text("Bild einfügen"),
+                  ),
+                ],
+              ),
+              CupertinoFormSection(
+                header: Text("Nachricht"),
+                children: [
+                  CupertinoTextField(
+                    padding: EdgeInsets.all(16.0),
+                    placeholder: "Titel",
+                    controller: _titleController,
+                  ),
+                  CupertinoTextField(
+                    padding: EdgeInsets.all(16.0),
+                    minLines: 5,
+                    maxLines: null,
+                    placeholder: "Beschreibung",
+                    controller: _descriptionController,
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CupertinoButton(
+                        child: Text("Vorschlag senden"),
+                        onPressed: () => _sendReport(ReportType.Proposal),
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CupertinoButton.filled(
-                          child: Text("Gefahrenmeldung"),
-                          onPressed: () => _sendReport(ReportType.Incident),
-                        ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CupertinoButton.filled(
+                        child: Text("Gefahrenmeldung"),
+                        onPressed: () => _sendReport(ReportType.Incident),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ));
   }
