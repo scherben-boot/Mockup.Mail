@@ -14,6 +14,8 @@
 	<string>mockup_mail</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Die App benötigt Zugriff auf die Kamera, um Bilder in deine Meldungen aufzunehmen</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
