@@ -58,7 +58,8 @@ class _ReportingPageState extends State<ReportingPage> {
         ),
         child: SafeArea(
           child: Center(
-            child: Column(
+            child: ListView(
+              shrinkWrap: true,
               children: [
                 CupertinoFormSection(
                   header: Text("Meta-Informationen"),

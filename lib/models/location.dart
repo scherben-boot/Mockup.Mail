@@ -1,6 +1,6 @@
-class Location {
+class Point {
   final double longitude;
   final double latitude;
 
-  Location(this.longitude, this.latitude);
+  Point(this.longitude, this.latitude);
 }

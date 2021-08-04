@@ -6,7 +6,7 @@ class Report {
   final String title;
   final String description;
   final String? imageLocation;
-  final Location? reportedLocation;
+  final Point? reportedLocation;
 
   Report(this.type, this.title, this.description, this.imageLocation,
       this.reportedLocation);

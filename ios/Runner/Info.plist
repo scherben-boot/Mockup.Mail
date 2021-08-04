@@ -16,6 +16,8 @@
 	<string>APPL</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Die App benötigt Zugriff auf die Kamera, um Bilder in deine Meldungen aufzunehmen</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Die App benötigt Zugriff auf deinen Standort, damit die Zuständigen wissen, wo sie dein Anliegen bearbeiten sollen.</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
