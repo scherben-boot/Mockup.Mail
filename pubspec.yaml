@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   kiwi: ^3.0.0
   image_picker: ^0.8.3
+  flutter_email_sender: ^5.0.2
   location: ^4.3.0
 
 dev_dependencies:

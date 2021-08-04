@@ -1,1 +1,3 @@
-abstract class ImageProviderService {}
+abstract class ImageProviderService {
+  Future<String?> pickImage();
+}

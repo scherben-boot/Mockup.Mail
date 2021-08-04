@@ -1,9 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:mockup_mail/dependency_injection/container.dart';
+import 'package:mockup_mail/models/report.dart';
+import 'package:mockup_mail/models/report_type.dart';
+import 'package:mockup_mail/services/geolocation.service.dart';
+import 'package:mockup_mail/services/image_provider.service.dart';
+import 'package:mockup_mail/services/reporting.service.dart';
 
 class ReportingPage extends StatefulWidget {
-  const ReportingPage({Key? key}) : super(key: key);
+  final ReportingService _reportingService = container.resolve();
+  final ImageProviderService _imageProviderService = container.resolve();
+  final GeolocationService _geolocationService = container.resolve();
+
+  ReportingPage({Key? key}) : super(key: key);
 
   @override
   _ReportingPageState createState() => _ReportingPageState();
@@ -12,7 +21,8 @@ class ReportingPage extends StatefulWidget {
 class _ReportingPageState extends State<ReportingPage> {
   bool _includeLocation = true;
   String? _imagePath;
-  String? _title;
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   Future<void> _updateImagePath(bool includeImage) async {
     if (!includeImage) {
@@ -21,13 +31,20 @@ class _ReportingPageState extends State<ReportingPage> {
       });
       return;
     }
-    final picker = ImagePicker();
-    PickedFile? pick = await picker.getImage(source: ImageSource.camera);
-    if (pick != null) {
-      setState(() {
-        _imagePath = pick.path;
-      });
-    }
+    final imagePath = await widget._imageProviderService.pickImage();
+    setState(() {
+      _imagePath = imagePath;
+    });
+  }
+
+  Future<void> _sendReport(ReportType type) async {
+    final currentLocation = _includeLocation
+        ? await widget._geolocationService.getCurrentLocation()
+        : null;
+    final report = Report(type, _titleController.text,
+        _descriptionController.text, _imagePath, currentLocation);
+
+    await widget._reportingService.sendReport(report);
   }
 
   @override
@@ -70,12 +87,14 @@ class _ReportingPageState extends State<ReportingPage> {
                     CupertinoTextField(
                       padding: EdgeInsets.all(16.0),
                       placeholder: "Titel",
+                      controller: _titleController,
                     ),
                     CupertinoTextField(
                       padding: EdgeInsets.all(16.0),
                       minLines: 5,
                       maxLines: null,
                       placeholder: "Beschreibung",
+                      controller: _descriptionController,
                     )
                   ],
                 ),
@@ -86,7 +105,7 @@ class _ReportingPageState extends State<ReportingPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: CupertinoButton(
                           child: Text("Vorschlag senden"),
-                          onPressed: () {},
+                          onPressed: () => _sendReport(ReportType.Proposal),
                         ),
                       ),
                     ),
@@ -95,7 +114,7 @@ class _ReportingPageState extends State<ReportingPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: CupertinoButton.filled(
                           child: Text("Gefahrenmeldung"),
-                          onPressed: () {},
+                          onPressed: () => _sendReport(ReportType.Incident),
                         ),
                       ),
                     ),
